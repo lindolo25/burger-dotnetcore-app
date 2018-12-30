@@ -10,7 +10,7 @@ namespace burger_dotnetcore_app.controllers
     {
         public ActionResult Index()
         {
-            return Content("Hello dotNet Core MVC"); //File("", "text/html; charset=utf-8");
+            return View(); //File("", "text/html; charset=utf-8");
         }
     }
 }
