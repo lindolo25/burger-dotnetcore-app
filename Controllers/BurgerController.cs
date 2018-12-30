@@ -7,14 +7,20 @@ using burger_dotnetcore_app.Models;
 
 namespace burger_dotnetcore_app.controllers
 {
-    public class HomeController : Controller
+    public class BurgerController : Controller
     {
         BurgersDb _db = new BurgersDb();
-        
-        [HttpGet]
-        public ActionResult Index()
+
+        [HttpPost]
+        public ActionResult Add()
         {
-            return View(); //File("", "text/html; charset=utf-8");
+            return Json(new { isRunning = true }); 
+        }
+
+        [HttpPut]
+        public ActionResult Edit()
+        {
+            return Json(new { isRunning = true }); 
         }
 
         protected override void Dispose(bool disposing)

@@ -46,6 +46,12 @@ namespace burger_dotnetcore_app
                     "/",
                     new { Controller = "Home", action = "Index" }
                 );
+
+                routes.MapRoute(
+                    "Burger",
+                    "/api/burgers/{action}",
+                    new { Controller = "Burger" }
+                );
             });
         }
     }
