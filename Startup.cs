@@ -34,13 +34,8 @@ namespace burger_dotnetcore_app
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
         
-            services.AddDbContext<BurgersDb>(options =>
-            {
-                string result = Configuration.GetConnectionString("BurgersConnection");
-                options.UseSqlServer(Configuration.GetConnectionString("BurgersConnection"));
-            });
+            services.AddDbContext<BurgersDb>(options => options.UseSqlServer(Configuration.GetConnectionString("BurgersConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
