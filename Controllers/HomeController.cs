@@ -9,12 +9,27 @@ namespace burger_dotnetcore_app.controllers
 {
     public class HomeController : Controller
     {
-        BurgersDb _db = new BurgersDb();
+        private readonly BurgersDb _db;
+        
+        public HomeController(BurgersDb db)
+        {
+            _db = db;
+        }
         
         [HttpGet]
         public ActionResult Index()
         {
-            return View(); //File("", "text/html; charset=utf-8");
+            IndexViewModel view = new IndexViewModel()
+            {
+                Burgers = (from burger in _db.burgers
+                          where burger.Devoured == false
+                          select burger).ToList(),
+
+                DevouredBurgers = (from burger in _db.burgers
+                                  where burger.Devoured == true
+                                  select burger).ToList()
+            };
+            return View(view); //File("", "text/html; charset=utf-8");
         }
 
         protected override void Dispose(bool disposing)

@@ -330,5 +330,5 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-# web.config file, it contains local database information.
-web.config
+# database configuration file, it contains local database information.
+DbConfig.json

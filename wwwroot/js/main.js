@@ -11,12 +11,12 @@ var eatFromTheListEvent = function()
     var burger = $(this);
     var index = burger.attr("data-index");
     var options = {
-        contentType: "application/json",
+        contentType: "application/json; charset=utf-8",
         method: "PUT",
         data: JSON.stringify({ devoured: true })
     }
 
-    $.ajax("/api/burgers/" + index, options).then(function(result) 
+    $.ajax("/api/burger/edit/" + index, options).then(function(result) 
     {
         //result = JSON.parse(result);
         if(result)
@@ -28,27 +28,28 @@ var eatFromTheListEvent = function()
 
 var addNewBurger = function(event)
 {
-    event.preventDefault()
-    console.log("New burger here it comes")
+    event.preventDefault();
+    var burger = $("#burger-name").val().trim();
 
-    var burger = $("#burger-name").val();
+    if(!burger) return;
+
     var options = {
-        contentType: "application/json",
+        contentType: "application/json; charset=utf-8",
         method: "POST",
-        data: JSON.stringify({ newBurger: burger })
-    }
+        data: JSON.stringify({ burgerName: burger })
+    };
 
-    $.ajax("/api/burgers", options).then(function(result) 
+    $.ajax("/api/burger/add", options).then(function(result) 
     {
         //result = JSON.parse(result);
         if(result)
         {
             var newBurger = $("<li>");
-            newBurger.text(burger);
-            newBurger.attr("data-index", result.insertId);
+            newBurger.text(result.burgerName);
+            newBurger.attr("data-index", result.id);
             newBurger.appendTo("#eat-list");
-        }        
-    })
+        }
+    });
 }
 
 

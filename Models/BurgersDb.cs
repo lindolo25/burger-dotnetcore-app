@@ -9,9 +9,9 @@ namespace burger_dotnetcore_app.Models
     {
         public DbSet<Burger> burgers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public BurgersDb(DbContextOptions<BurgersDb> options) : base(options) 
         {
-            optionsBuilder.UseSqlServer(@"name=BurgersConnection");
+
         }
     }
 }

@@ -9,18 +9,35 @@ namespace burger_dotnetcore_app.controllers
 {
     public class BurgerController : Controller
     {
-        BurgersDb _db = new BurgersDb();
+        private readonly BurgersDb _db;
+        
+        public BurgerController(BurgersDb db)
+        {
+            _db = db;
+        }
 
         [HttpPost]
-        public ActionResult Add()
+        public async Task<ActionResult<Burger>> Add([FromBody] Burger newBurger)
         {
-            return Json(new { isRunning = true }); 
+            if(!ModelState.IsValid) return Json(false);
+            
+            _db.burgers.Add(newBurger);
+            await _db.SaveChangesAsync();
+
+            return newBurger;
         }
 
         [HttpPut]
-        public ActionResult Edit()
+        [Route("/api/burger/edit/{Id:int}")]
+        public async Task<ActionResult<Burger>> Edit([FromRoute] int Id)
         {
-            return Json(new { isRunning = true }); 
+            Burger burger =  await _db.burgers.FindAsync(Id);
+            if(burger == null) return Json(false);
+
+            burger.Devoured = true;
+            await _db.SaveChangesAsync();
+            
+            return burger;
         }
 
         protected override void Dispose(bool disposing)

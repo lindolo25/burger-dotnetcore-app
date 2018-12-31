@@ -6,8 +6,8 @@ namespace burger_dotnetcore_app.Models
 {
     public class IndexViewModel
     {
-        public List<Burger> Burgers { get; set; }
+        public ICollection<Burger> Burgers { get; set; }
 
-        public List<Burger> DevouredBurgers { get; set; }
+        public ICollection<Burger> DevouredBurgers { get; set; }
     }
 }

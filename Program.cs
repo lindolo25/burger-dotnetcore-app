@@ -19,6 +19,11 @@ namespace burger_dotnetcore_app
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.AddJsonFile("DbConfig.json", optional: true, reloadOnChange: true);
+                })
                 .UseStartup<Startup>();
     }
 }

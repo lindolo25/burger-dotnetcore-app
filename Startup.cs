@@ -9,11 +9,21 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using burger_dotnetcore_app.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Formatters;
+
 
 namespace burger_dotnetcore_app
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -25,6 +35,12 @@ namespace burger_dotnetcore_app
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+        
+            services.AddDbContext<BurgersDb>(options =>
+            {
+                string result = Configuration.GetConnectionString("BurgersConnection");
+                options.UseSqlServer(Configuration.GetConnectionString("BurgersConnection"));
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -49,7 +65,7 @@ namespace burger_dotnetcore_app
 
                 routes.MapRoute(
                     "Burger",
-                    "/api/burgers/{action}",
+                    "/api/burger/{action}",
                     new { Controller = "Burger" }
                 );
             });
