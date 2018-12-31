@@ -53,6 +53,7 @@ namespace burger_dotnetcore_app
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStatusCodePages();
             app.UseStaticFiles();
             
             app.UseMvc(routes =>
