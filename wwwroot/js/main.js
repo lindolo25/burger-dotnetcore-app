@@ -29,14 +29,15 @@ var eatFromTheListEvent = function()
 var addNewBurger = function(event)
 {
     event.preventDefault();
-    var burger = $("#burger-name").val().trim();
+    var burger = $("#burger-name");
+    var burgerVal = burger.val().trim();
 
-    if(!burger) return;
+    if(!burgerVal) return;
 
     var options = {
         contentType: "application/json; charset=utf-8",
         method: "POST",
-        data: JSON.stringify({ burgerName: burger })
+        data: JSON.stringify({ burgerName: burgerVal })
     };
 
     $.ajax("/api/burger/add", options).then(function(result) 
@@ -48,6 +49,8 @@ var addNewBurger = function(event)
             newBurger.text(result.burgerName);
             newBurger.attr("data-index", result.id);
             newBurger.appendTo("#eat-list");
+
+            burger.val("");
         }
     });
 }
